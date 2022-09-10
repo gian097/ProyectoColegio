@@ -3,6 +3,11 @@ package com.proyectoColegio.colegio.modelos;
 import javax.persistence.*;
 
 
+enum Roles {
+    ADMINISTRATIVO,OPERATIVO;
+}
+
+
 @Entity
 @Table(name="Empleado")
 public class Empleado {
@@ -14,16 +19,16 @@ public class Empleado {
     @ManyToOne
     @JoinColumn(name = "colegio_id")
     private Colegios colegios;
-    private String rol;
+    public Roles rol;
 
     public Empleado() {
     }
 
-    public Empleado(String nombre, String correo, Colegios colegios, String rol) {
+    public Empleado(String nombre, String correo, Colegios colegios, Roles rol) {
         this.nombre = nombre;
         this.correo = correo;
         this.colegios = colegios;
-        this.rol = rol;
+        this.rol = Roles.OPERATIVO;
     }
 
     public int getId() {
@@ -58,11 +63,11 @@ public class Empleado {
         this.colegios = colegios;
     }
 
-    public String getRol() {
+    public Roles getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(Roles rol) {
         this.rol = rol;
     }
 }

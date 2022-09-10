@@ -29,6 +29,7 @@ public class ContorllerColegios {
 
     @GetMapping(path = "enterprises/{id}")
     public Colegios empresaPorID(@PathVariable("id") Integer id){
+
         return this.colegiosService.getColegiosById(id);
     }
 

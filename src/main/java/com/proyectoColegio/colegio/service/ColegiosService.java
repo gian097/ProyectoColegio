@@ -23,7 +23,9 @@ public class ColegiosService {
     //Metodo que me trae un objeto de tipo Empresa cuando cuento con el id de la misma
     public Colegios getColegiosById(Integer id){
         return colegiosRepository.findById(id).get();
-    }
+
+     }
+
 
     //Metodo para guardar o actualizar objetos de tipo Empresa
     public Colegios saveOrUpdateColegios(Colegios colegios){
