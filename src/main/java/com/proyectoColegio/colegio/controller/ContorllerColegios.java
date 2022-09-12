@@ -3,9 +3,14 @@ package com.proyectoColegio.colegio.controller;
 import com.proyectoColegio.colegio.modelos.Colegios;
 import com.proyectoColegio.colegio.service.ColegiosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -28,9 +33,19 @@ public class ContorllerColegios {
 
 
     @GetMapping(path = "enterprises/{id}")
-    public Colegios empresaPorID(@PathVariable("id") Integer id){
+    public ResponseEntity<?>  empresaPorID(@PathVariable Integer id){
+        Map<String, Object> response = new HashMap<>();
+        Colegios colegioAtual = null;
+        colegioAtual = colegiosService.getColegiosById(id);
 
-        return this.colegiosService.getColegiosById(id);
+        if(colegioAtual != null){
+            response.put("Colegio",colegioAtual);
+        }else {
+            response.put("Mensaje","El coloegio no existe");
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+
     }
 
     @PatchMapping("/enterprises/{id}")
@@ -44,7 +59,6 @@ public class ContorllerColegios {
 
     }
 
-
     @DeleteMapping (path= "enterprises/{id}") //Eliminar registro de la bd
     public String DeleteColegio(@PathVariable("id") Integer id){
         boolean respuesta= this.colegiosService.deleteColegio(id);
@@ -55,4 +69,8 @@ public class ContorllerColegios {
             return "No se pudo eliminar la empresa con id"+id;
         }
     }
+
+
+
+
 }
